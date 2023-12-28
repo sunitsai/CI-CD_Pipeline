@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/yourusername/your-nodejs-app.git'
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    def npm = tool 'NodeJS 14.x'
+                    sh "${npm}/bin/npm install"
+                }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    def npm = tool 'NodeJS 14.x'
+                    sh "${npm}/bin/npm run build"
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    def npm = tool 'NodeJS 14.x'
+                    sh "${npm}/bin/npm test"
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script {
+                    // Your deployment steps go here
+                    // Example: Deploy to a server or push to a container registry
+                }
+            }
+        }
+    }
+}
